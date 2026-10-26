@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #08140f;
+  --color-surface: #0f1f18;
+  --color-card: #15281f;
+  --color-line: #21382c;
+  --color-brand: #2ec27e;
+  --color-brand-dim: #1d8a5a;
+  --color-gold: #f5c542;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background: radial-gradient(1200px 500px at 50% -100px, #14402e 0%, transparent 70%), var(--color-bg);
+  color: #e8f3ec;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}

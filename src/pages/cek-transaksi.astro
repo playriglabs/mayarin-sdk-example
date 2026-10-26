@@ -1,0 +1,20 @@
+---
+import Base from "../layouts/Base.astro";
+const notFound = Astro.url.searchParams.has("notfound");
+---
+<Base title="Cek Transaksi – GamingFun">
+  <form method="get" id="f" class="max-w-lg mx-auto rounded-2xl bg-card border border-line p-6 space-y-4">
+    <h1 class="text-xl font-bold">Cek Transaksi</h1>
+    {notFound && <p class="text-sm text-red-400">Order tidak ditemukan.</p>}
+    <input id="oid" required placeholder="Masukkan ID order, mis. GF1A2B3C4D5E"
+      class="w-full h-11 rounded-xl bg-surface border border-line px-3 text-sm outline-none focus:border-brand" />
+    <button class="w-full h-11 rounded-full bg-brand text-bg font-bold">Cek</button>
+  </form>
+  <script>
+    document.getElementById("f")!.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const v = (document.getElementById("oid") as HTMLInputElement).value.trim();
+      location.href = `/order/${encodeURIComponent(v)}`;
+    });
+  </script>
+</Base>

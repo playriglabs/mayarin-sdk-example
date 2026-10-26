@@ -1,0 +1,13 @@
+---
+import type { Game } from "../lib/types";
+const { game } = Astro.props as { game: Game };
+---
+<a href={`/${game.slug}`} data-game={`${game.name} ${game.publisher}`.toLowerCase()}
+  class="flex items-center gap-4 rounded-2xl bg-card border border-line p-3 hover:border-brand transition">
+  <img src={game.image} alt={game.name} width="64" height="64" referrerpolicy="no-referrer"
+    class="size-16 rounded-xl object-cover" />
+  <div>
+    <div class="font-bold uppercase">{game.name}</div>
+    <div class="text-sm text-white/60">{game.publisher}</div>
+  </div>
+</a>

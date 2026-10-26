@@ -1,0 +1,22 @@
+---
+import Base from "../layouts/Base.astro";
+import TopupForm from "../components/TopupForm";
+import { getGame } from "../lib/catalog";
+const game = getGame(Astro.params.slug!);
+if (!game) return Astro.redirect("/");
+---
+<Base title={`Top Up ${game.name} – GamingFun`}>
+  <section class="relative overflow-hidden rounded-3xl border border-line mb-6">
+    <img src={game.banner} alt="" referrerpolicy="no-referrer" class="absolute inset-0 size-full object-cover opacity-30" />
+    <div class="absolute inset-0 bg-gradient-to-r from-bg to-transparent"></div>
+    <div class="relative flex items-center gap-5 p-6">
+      <img src={game.image} alt={game.name} width="96" height="96" referrerpolicy="no-referrer" class="size-24 rounded-2xl object-cover" />
+      <div>
+        <h1 class="text-2xl font-extrabold">{game.name}</h1>
+        <p class="text-sm text-white/60">{game.publisher}</p>
+        <p class="text-sm text-white/80 mt-2 max-w-xl">{game.description}</p>
+      </div>
+    </div>
+  </section>
+  <TopupForm client:load game={game} />
+</Base>

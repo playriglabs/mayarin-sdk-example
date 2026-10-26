@@ -1,0 +1,12 @@
+---
+import Base from "../../layouts/Base.astro";
+import OrderStatus from "../../components/OrderStatus";
+import { getOrder } from "../../lib/orders";
+const order = await getOrder(Astro.params.id!);
+if (!order) return Astro.redirect("/cek-transaksi?notfound=1");
+const { id, gameName, productName, price, status, createdAt, checkoutUrl, mock } = order;
+---
+<Base title={`Order ${id} – GamingFun`}>
+  <OrderStatus client:load initial={{ id, gameName, productName, price, status, createdAt, checkoutUrl, mock }} />
+  <div class="text-center mt-6"><a href="/" class="text-brand text-sm">← Kembali ke beranda</a></div>
+</Base>

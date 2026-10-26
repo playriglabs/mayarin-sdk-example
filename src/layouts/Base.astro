@@ -1,0 +1,56 @@
+---
+import "../styles/global.css";
+import { isMock } from "../lib/mayarin";
+interface Props { title?: string }
+const { title = "GamingFun – Top Up Game Pakai Crypto" } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  { href: "/", label: "Beranda" },
+  { href: "/cek-transaksi", label: "Cek Transaksi" },
+];
+---
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="referrer" content="no-referrer" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <title>{title}</title>
+  </head>
+  <body>
+    {isMock && (
+      <div class="bg-gold/15 text-gold text-center text-xs py-1.5 border-b border-gold/20">
+        Demo mode: MAYARIN_API_KEY belum diset, pembayaran disimulasikan.
+      </div>
+    )}
+    <header class="border-b border-line bg-bg/80 backdrop-blur sticky top-0 z-20">
+      <div class="mx-auto max-w-6xl px-4 h-16 flex items-center gap-4">
+        <a href="/" class="font-extrabold text-xl tracking-tight shrink-0">
+          Gaming<span class="text-brand">Fun</span>
+        </a>
+        <input id="search" type="search" placeholder="Cari game..." autocomplete="off"
+          class="flex-1 min-w-0 h-10 rounded-full bg-surface border border-line px-4 text-sm outline-none focus:border-brand" />
+        <nav class="hidden sm:flex gap-5 text-sm shrink-0">
+          {nav.map((n) => (
+            <a href={n.href} class:list={["hover:text-brand", path === n.href && "text-brand font-semibold"]}>{n.label}</a>
+          ))}
+        </nav>
+      </div>
+    </header>
+    <main class="mx-auto max-w-6xl px-4 py-6"><slot /></main>
+    <footer class="border-t border-line mt-16 py-8 text-center text-xs text-white/40">
+      GamingFun demo · pembayaran crypto via Mayarin
+    </footer>
+    <script>
+      const input = document.getElementById("search") as HTMLInputElement;
+      input.addEventListener("input", () => {
+        const q = input.value.trim().toLowerCase();
+        document.querySelectorAll<HTMLElement>("[data-game]").forEach((el) => {
+          el.hidden = !!q && !el.dataset.game!.includes(q);
+        });
+      });
+    </script>
+  </body>
+</html>

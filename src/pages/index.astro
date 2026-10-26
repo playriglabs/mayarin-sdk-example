@@ -1,0 +1,31 @@
+---
+import Base from "../layouts/Base.astro";
+import GameCard from "../components/GameCard.astro";
+import { getGames } from "../lib/catalog";
+const games = getGames();
+const perks = ["Proses Cepat & Otomatis", "Bayar Crypto (USDC & lainnya)", "Layanan 24 Jam"];
+---
+<Base>
+  <section class="relative overflow-hidden rounded-3xl border border-line">
+    <img src={games[0].banner} alt="" referrerpolicy="no-referrer" class="absolute inset-0 size-full object-cover opacity-40" />
+    <div class="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent"></div>
+    <div class="relative p-8 sm:p-14 max-w-xl">
+      <p class="text-gold font-semibold text-sm mb-2">TOP UP GAME PAKAI CRYPTO</p>
+      <h1 class="text-3xl sm:text-5xl font-extrabold leading-tight">Top up cepat, bayar pakai stablecoin.</h1>
+      <p class="mt-3 text-white/70">Mobile Legends, Genshin Impact, Free Fire. Pembayaran lewat Mayarin.</p>
+      <a href="#populer" class="inline-block mt-6 rounded-full bg-brand text-bg font-bold px-6 py-3 hover:bg-brand-dim">Mulai Top Up</a>
+    </div>
+  </section>
+
+  <section id="populer" class="mt-10">
+    <h2 class="text-lg font-bold">🔥 POPULER SEKARANG!</h2>
+    <p class="text-sm text-white/60 mb-4">Pilih game yang ingin kamu top up.</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {games.map((g) => <GameCard game={g} />)}
+    </div>
+  </section>
+
+  <section class="mt-10 grid gap-3 sm:grid-cols-3 text-sm text-white/70">
+    {perks.map((p) => <div class="rounded-xl bg-surface border border-line px-4 py-3">✓ {p}</div>)}
+  </section>
+</Base>

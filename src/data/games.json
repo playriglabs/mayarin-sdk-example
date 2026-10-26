@@ -1,0 +1,650 @@
+[
+  {
+    "slug": "mobile-legends",
+    "name": "Mobile Legends",
+    "publisher": "Moonton",
+    "currencyName": "Diamond",
+    "image": "/games/ml-logo.webp",
+    "banner": "/games/ml-banner.webp",
+    "icon": "/icons/diamond-ml.svg",
+    "description": "Top up Diamond Mobile Legends: Bang Bang. Masukkan ID dan Server, bayar crypto, diamond masuk otomatis.",
+    "fields": [
+      {
+        "key": "userId",
+        "label": "ID",
+        "placeholder": "Masukkan ID",
+        "type": "text"
+      },
+      {
+        "key": "zoneId",
+        "label": "Server",
+        "placeholder": "Masukkan Server",
+        "type": "text"
+      }
+    ],
+    "products": [
+      {
+        "id": "ml-5",
+        "name": "Mobile Legends 5 Diamond",
+        "price": 1713,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-10",
+        "name": "Mobile Legends 10 Diamond",
+        "price": 3421,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-11",
+        "name": "Mobile Legends 11 Diamond",
+        "price": 3988,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-12",
+        "name": "Mobile Legends 12 Diamond",
+        "price": 3988,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-14",
+        "name": "Mobile Legends 14 Diamond",
+        "price": 5129,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-15",
+        "name": "Mobile Legends 15 Diamond",
+        "price": 5129,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-19",
+        "name": "Mobile Legends 19 Diamond",
+        "price": 6263,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-20",
+        "name": "Mobile Legends 20 Diamond",
+        "price": 6836,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-22",
+        "name": "Mobile Legends 22 Diamond",
+        "price": 7403,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-28",
+        "name": "Mobile Legends 28 Diamond",
+        "price": 9110,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-30",
+        "name": "Mobile Legends 30 Diamond",
+        "price": 10245,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-36",
+        "name": "Mobile Legends 36 Diamond",
+        "price": 11953,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-42",
+        "name": "Mobile Legends 42 Diamond",
+        "price": 13676,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-44",
+        "name": "Mobile Legends 44 Diamond",
+        "price": 13676,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-45",
+        "name": "Mobile Legends 45 Diamond",
+        "price": 14806,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-46",
+        "name": "Mobile Legends 46 Diamond",
+        "price": 15373,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-54",
+        "name": "Mobile Legends 54 Diamond",
+        "price": 17091,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-56",
+        "name": "Mobile Legends 56 Diamond",
+        "price": 17658,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-59",
+        "name": "Mobile Legends 59 Diamond",
+        "price": 18229,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-60",
+        "name": "Mobile Legends 60 Diamond",
+        "price": 19366,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-64",
+        "name": "Mobile Legends 64 Diamond",
+        "price": 19936,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-65",
+        "name": "Mobile Legends 65 Diamond",
+        "price": 21074,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-67",
+        "name": "Mobile Legends 67 Diamond",
+        "price": 21641,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-70",
+        "name": "Mobile Legends 70 Diamond",
+        "price": 22211,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-74",
+        "name": "Mobile Legends 74 Diamond",
+        "price": 23352,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-75",
+        "name": "Mobile Legends 75 Diamond",
+        "price": 23916,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-78",
+        "name": "Mobile Legends 78 Diamond",
+        "price": 24552,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-80",
+        "name": "Mobile Legends 80 Diamond",
+        "price": 25623,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-85",
+        "name": "Mobile Legends 85 Diamond",
+        "price": 26203,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-86",
+        "name": "Mobile Legends 86 Diamond",
+        "price": 27333,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-88",
+        "name": "Mobile Legends 88 Diamond",
+        "price": 27341,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-89",
+        "name": "Mobile Legends 89 Diamond",
+        "price": 27911,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-92",
+        "name": "Mobile Legends 92 Diamond",
+        "price": 29041,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-98",
+        "name": "Mobile Legends 98 Diamond",
+        "price": 30772,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-100",
+        "name": "Mobile Legends 100 Diamond",
+        "price": 31339,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-110",
+        "name": "Mobile Legends 110 Diamond",
+        "price": 34755,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-112",
+        "name": "Mobile Legends 112 Diamond",
+        "price": 35322,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-116",
+        "name": "Mobile Legends 116 Diamond",
+        "price": 36461,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-128",
+        "name": "Mobile Legends 128 Diamond",
+        "price": 39878,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-140",
+        "name": "Mobile Legends 140 Diamond",
+        "price": 43860,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-148",
+        "name": "Mobile Legends 148 Diamond",
+        "price": 46142,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-170",
+        "name": "Mobile Legends 170 Diamond",
+        "price": 52408,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-172",
+        "name": "Mobile Legends 172 Diamond",
+        "price": 53542,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-176",
+        "name": "Mobile Legends 176 Diamond",
+        "price": 54680,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-222",
+        "name": "Mobile Legends 222 Diamond",
+        "price": 68912,
+        "image": "/icons/diamond-ml.svg"
+      },
+      {
+        "id": "ml-223",
+        "name": "Mobile Legends 223 Diamond",
+        "price": 69488,
+        "image": "/icons/diamond-ml.svg"
+      }
+    ]
+  },
+  {
+    "slug": "genshin-impact",
+    "name": "Genshin Impact",
+    "publisher": "HoYoverse",
+    "currencyName": "Genesis Crystals",
+    "image": "/games/gi-logo.webp",
+    "banner": "/games/gi-banner.webp",
+    "icon": "/icons/crystal-gi.svg",
+    "description": "Top up Genesis Crystals Genshin Impact. Masukkan UID dan pilih server.",
+    "fields": [
+      {
+        "key": "userId",
+        "label": "UID",
+        "placeholder": "Masukkan UID",
+        "type": "text"
+      },
+      {
+        "key": "zoneId",
+        "label": "Server",
+        "placeholder": "Pilih Server",
+        "type": "select",
+        "options": [
+          "Asia",
+          "America",
+          "Europe",
+          "TW_HK_MO"
+        ]
+      }
+    ],
+    "products": [
+      {
+        "id": "gi-1",
+        "name": "60 Genesis Crystals",
+        "price": 17356,
+        "image": "/icons/crystal-gi.svg"
+      },
+      {
+        "id": "gi-2",
+        "name": "300+30 Genesis Crystals",
+        "price": 85175,
+        "image": "/icons/crystal-gi.svg"
+      },
+      {
+        "id": "gi-3",
+        "name": "980+110 Genesis Crystals",
+        "price": 268084,
+        "image": "/icons/crystal-gi.svg"
+      },
+      {
+        "id": "gi-4",
+        "name": "1980+260 Genesis Crystals",
+        "price": 514067,
+        "image": "/icons/crystal-gi.svg"
+      }
+    ]
+  },
+  {
+    "slug": "free-fire",
+    "name": "Free Fire",
+    "publisher": "Garena",
+    "currencyName": "Diamond",
+    "image": "/games/ff-logo.webp",
+    "banner": "/games/ff-banner.webp",
+    "icon": "/icons/diamond-ff.svg",
+    "description": "Top up Diamond Free Fire. Cukup masukkan ID pemain.",
+    "fields": [
+      {
+        "key": "userId",
+        "label": "ID",
+        "placeholder": "Masukkan ID",
+        "type": "text"
+      }
+    ],
+    "products": [
+      {
+        "id": "ff-5",
+        "name": "Free Fire 5 Diamond",
+        "price": 799,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-40",
+        "name": "Free Fire 40 Diamond",
+        "price": 5853,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-50",
+        "name": "Free Fire 50 Diamond",
+        "price": 6215,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-55",
+        "name": "Free Fire 55 Diamond",
+        "price": 6990,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-60",
+        "name": "Free Fire 60 Diamond",
+        "price": 7766,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-70",
+        "name": "Free Fire 70 Diamond",
+        "price": 8458,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-75",
+        "name": "Free Fire 75 Diamond",
+        "price": 9234,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-80",
+        "name": "Free Fire 80 Diamond",
+        "price": 10010,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-90",
+        "name": "Free Fire 90 Diamond",
+        "price": 11567,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-95",
+        "name": "Free Fire 95 Diamond",
+        "price": 12342,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-100",
+        "name": "Free Fire 100 Diamond",
+        "price": 12429,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-120",
+        "name": "Free Fire 120 Diamond",
+        "price": 14673,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-125",
+        "name": "Free Fire 125 Diamond",
+        "price": 15449,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-130",
+        "name": "Free Fire 130 Diamond",
+        "price": 16224,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-140",
+        "name": "Free Fire 140 Diamond",
+        "price": 16917,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-145",
+        "name": "Free Fire 145 Diamond",
+        "price": 17692,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-150",
+        "name": "Free Fire 150 Diamond",
+        "price": 18468,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-160",
+        "name": "Free Fire 160 Diamond",
+        "price": 20020,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-170",
+        "name": "Free Fire 170 Diamond",
+        "price": 20882,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-180",
+        "name": "Free Fire 180 Diamond",
+        "price": 22434,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-190",
+        "name": "Free Fire 190 Diamond",
+        "price": 23126,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-200",
+        "name": "Free Fire 200 Diamond",
+        "price": 24677,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-210",
+        "name": "Free Fire 210 Diamond",
+        "price": 25370,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-230",
+        "name": "Free Fire 230 Diamond",
+        "price": 28489,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-250",
+        "name": "Free Fire 250 Diamond",
+        "price": 30903,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-260",
+        "name": "Free Fire 260 Diamond",
+        "price": 31595,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-280",
+        "name": "Free Fire 280 Diamond",
+        "price": 33839,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-300",
+        "name": "Free Fire 300 Diamond",
+        "price": 36942,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-350",
+        "name": "Free Fire 350 Diamond",
+        "price": 42291,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-360",
+        "name": "Free Fire 360 Diamond",
+        "price": 43066,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-375",
+        "name": "Free Fire 375 Diamond",
+        "price": 45394,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-400",
+        "name": "Free Fire 400 Diamond",
+        "price": 48501,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-420",
+        "name": "Free Fire 420 Diamond",
+        "price": 50744,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-455",
+        "name": "Free Fire 455 Diamond",
+        "price": 54709,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-475",
+        "name": "Free Fire 475 Diamond",
+        "price": 56953,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-495",
+        "name": "Free Fire 495 Diamond",
+        "price": 59197,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-500",
+        "name": "Free Fire 500 Diamond",
+        "price": 59972,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-512",
+        "name": "Free Fire 512 Diamond",
+        "price": 61663,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-520",
+        "name": "Free Fire 520 Diamond",
+        "price": 63075,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-545",
+        "name": "Free Fire 545 Diamond",
+        "price": 65406,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-565",
+        "name": "Free Fire 565 Diamond",
+        "price": 67650,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-600",
+        "name": "Free Fire 600 Diamond",
+        "price": 72391,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-635",
+        "name": "Free Fire 635 Diamond",
+        "price": 76103,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-645",
+        "name": "Free Fire 645 Diamond",
+        "price": 77654,
+        "image": "/icons/diamond-ff.svg"
+      },
+      {
+        "id": "ff-655",
+        "name": "Free Fire 655 Diamond",
+        "price": 79206,
+        "image": "/icons/diamond-ff.svg"
+      }
+    ]
+  }
+]

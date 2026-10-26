@@ -1,0 +1,19 @@
+---
+import Base from "../../layouts/Base.astro";
+import { getOrder } from "../../lib/orders";
+import { isMock } from "../../lib/mayarin";
+import { rupiah } from "../../lib/format";
+if (!isMock) return Astro.redirect("/");
+const order = await getOrder(Astro.params.id!);
+if (!order) return Astro.redirect("/");
+---
+<Base title="Simulasi Pembayaran">
+  <div class="max-w-md mx-auto rounded-2xl bg-card border border-line p-6 space-y-4 text-center">
+    <p class="text-gold text-xs font-semibold">SIMULASI MAYARIN CHECKOUT</p>
+    <div class="font-semibold">{order.productName}</div>
+    <div class="text-2xl font-extrabold text-brand">{rupiah(order.price)}</div>
+    <form method="post" action={`/api/mock-pay/${order.id}`}>
+      <button class="w-full h-12 rounded-full bg-brand text-bg font-bold">Bayar (simulasi)</button>
+    </form>
+  </div>
+</Base>
