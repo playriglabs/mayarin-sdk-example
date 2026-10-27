@@ -42,11 +42,10 @@ export interface Order {
   account: { userId: string; zoneId?: string };
   status: OrderStatus;
   intentId?: string;
+  /** Headless payment attempts so far; part of the idempotency key. */
+  attempts?: number;
   checkoutUrl?: string;
   mock: boolean;
   createdAt: string;
   updatedAt: string;
 }
-
-export type Chain = "ethereum-sepolia" | "base-sepolia" | "arbitrum-sepolia" | "polygon-amoy" | "bsc-testnet" | "arc-testnet";
-export type Asset = "USDC" | "ETH";

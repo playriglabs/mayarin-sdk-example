@@ -3,18 +3,11 @@ import { MayarinWebhookError } from "@mayarin/sdk";
 import { constructWebhook, fetchIntentStatus } from "../../../lib/mayarin";
 import { getOrder, updateOrder } from "../../../lib/orders";
 
-interface MayarinWebhookEvent {
-  id: string;
-  type: "payment.created" | "payment.state_changed" | "payment.failed";
-  occurredAt: string;
-  data: { paymentIntentId: string; state: string; metadata: Record<string, string> };
-}
-
 export const POST: APIRoute = async ({ request }) => {
   const raw = await request.text();
-  let event: MayarinWebhookEvent;
+  let event;
   try {
-    event = await constructWebhook<MayarinWebhookEvent>({
+    event = await constructWebhook({
       payload: raw,
       signature: request.headers.get("webhook-signature") ?? "",
       secret: import.meta.env.MAYARIN_WEBHOOK_SECRET ?? "",
@@ -28,7 +21,9 @@ export const POST: APIRoute = async ({ request }) => {
   const result = await fetchIntentStatus(event.data.paymentIntentId);
   if (result?.orderId && result.status) {
     const order = await getOrder(result.orderId);
-    if (order && order.status === "PENDING") {
+    // A cancelled attempt (rail changed) must not touch the order's current intent.
+    const stale = order?.intentId && order.intentId !== event.data.paymentIntentId;
+    if (order && !stale && order.status === "PENDING") {
       await updateOrder(order.id, { status: result.status, intentId: event.data.paymentIntentId });
     }
   }

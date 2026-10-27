@@ -98,7 +98,7 @@ export default function TopupForm({ game }: { game: Game }) {
                 {f.type === "select" ? (
                   <div className="relative">
                     <select
-                      className={`${inputCls} appearance-none pr-10 [color-scheme:dark]`}
+                      className={`${inputCls} appearance-none pr-10 scheme-dark`}
                       value={values[f.key] ?? ""}
                       onChange={(e) =>
                         setValues({ ...values, [f.key]: e.target.value })

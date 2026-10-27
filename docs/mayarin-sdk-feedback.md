@@ -1,4 +1,4 @@
-# Feedback: @mayarin/sdk 0.1.0-next.3
+# Feedback: @mayarin/sdk 0.1.0-next.3 (status re-checked on next.4)
 
 Found while building a game top up storefront (hosted checkout + headless deposit-match) against the testnet. Everything below was observed directly.
 
@@ -48,3 +48,7 @@ await c.commerce.carts.checkout({ merchant, currency: "IDR", merchantReference: 
   lines: [{ name: "t", unitPrice: { amount: "1000.00", asset: "IDR" }, quantity: 1,
     imageUrl: "http://localhost:4321/a.png" }] });
 ```
+
+## Status on 0.1.0-next.4
+Fixed: 1 (`AssetCode`, `ChainId`, `OnChainAssetCode`, `MoneyDto` exported), 2-3 (`settlementAsset` is `StablecoinCode`, pay asset is `OnChainAssetCode`), 7 (typed `PaymentWebhookEvent`), 8 (`validationIssues`), 9 (`cancelIntent`), 11 (`commerce.rails()`, no payment link needed), 12 (`simulateDeposit`), 19-22 (`ValidationIssue`, `validateIntent` dry run), 23 (`latest` tag now points at the newest release).
+Still open: 4 (chain/asset pair is runtime-only), 5, 6, 10 (rail still fixed at `createIntent`; we cancel + recreate), 13, 14, 15, 16 (`PROCESSING` right after confirm), 17, 21 (`FORBIDDEN` details).
