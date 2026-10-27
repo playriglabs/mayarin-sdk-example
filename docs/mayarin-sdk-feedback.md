@@ -22,7 +22,7 @@ Found while building a game top up storefront (hosted checkout + headless deposi
 ## Still open
 
 ### Types
-1. chain + asset pairs are not constrained by type. `{ chain: "arbitrum-sepolia", asset: "ETH" }` type-checks; the API refuses it. Only `commerce.rails()` at runtime knows the pairs. **verified** (`CreatePaymentIntentBody` narrows asset only)
+1. chain + asset pairs are not constrained by type. `{ chain: "arbitrum-sepolia", asset: "ETH" }` type-checks; the API refuses it. Only `commerce.rails()` at runtime knows the pairs. The refusal is good (`ETH on arbitrum-sepolia cannot be paid ...` with the offered rails in `details.rails`), but `validationIssues(error)` returns `[]` for it and `details.rails` is untyped. **verified** on next.4 with `validateIntent`
 2. `amount` is optional in the `createIntent` body, and nothing distinguishes a `qr` intent from an `amount` intent. **verified**
 3. Money is a plain string with no decimal-aware type (VND and JPY have 0 decimals, IDR has 2). **verified**
 4. `RailDto.asset` and `RailDto.settlementAsset` are still `AssetCode`, while `createIntent` now takes `OnChainAssetCode` / `StablecoinCode`. Reading a rail and passing it to `createIntent` needs a cast. **verified**
