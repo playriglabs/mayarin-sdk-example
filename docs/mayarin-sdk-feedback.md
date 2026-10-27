@@ -52,3 +52,10 @@ await c.commerce.carts.checkout({ merchant, currency: "IDR", merchantReference: 
 ## Status on 0.1.0-next.4
 Fixed: 1 (`AssetCode`, `ChainId`, `OnChainAssetCode`, `MoneyDto` exported), 2-3 (`settlementAsset` is `StablecoinCode`, pay asset is `OnChainAssetCode`), 7 (typed `PaymentWebhookEvent`), 8 (`validationIssues`), 9 (`cancelIntent`), 11 (`commerce.rails()`, no payment link needed), 12 (`simulateDeposit`), 19-22 (`ValidationIssue`, `validateIntent` dry run), 23 (`latest` tag now points at the newest release).
 Still open: 4 (chain/asset pair is runtime-only), 5, 6, 10 (rail still fixed at `createIntent`; we cancel + recreate), 13, 14, 15, 16 (`PROCESSING` right after confirm), 17, 21 (`FORBIDDEN` details).
+
+## New on next.4 (found after upgrading)
+25. No automatic retry: errors are flagged `retryable: true` (e.g. `NETWORK_ERROR`, "The request never reached the API") but the SDK never retries, so one dropped connection fails a whole checkout. We wrap `createIntent`/`confirmIntent` in our own `withRetry`. A `retries` option on `ClientConfig` (idempotent calls only) would help.
+26. `NETWORK_ERROR` hides the cause: it is only in `error.cause` (`ECONNRESET`, timeout, DNS). Including the code in `message` would make logs useful.
+27. No icon URLs for chains or assets. `RailDto` has `chain`, `asset`, `contract`, `settlementAsset` only, so integrators with their own payer UI have to ship logos themselves (the hosted checkout and dashboard already show them). Suggest `iconUrl` on rails.
+28. `commerce.rails()` returns a flat list. Grouping by chain (chain, label, assets[]) is what every picker needs; a `groupByChain` helper or a grouped response would save the boilerplate.
+29. No `timeoutMs` in `ClientConfig`; the only way to bound a request is passing an `AbortSignal` per call.
