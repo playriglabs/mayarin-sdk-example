@@ -1,61 +1,61 @@
-# Feedback: @mayarin/sdk 0.1.0-next.3 (status re-checked on next.4)
+# Feedback: @mayarin/sdk 0.1.0-next.4
 
-Found while building a game top up storefront (hosted checkout + headless deposit-match) against the testnet. Everything below was observed directly.
+Found while building a game top up storefront (hosted checkout + headless deposit-match) against the testnet. First written against `0.1.0-next.3`, re-checked on `0.1.0-next.4`. Items are marked:
 
-## Types
-1. `AssetCode`, `ChainId`, `Money` are not exported from the package root. We derive them with `Parameters<...>`.
-2. `settlementAsset` (`PaymentIntentDto`, `RailDto`, `PaymentRailsDto`, create body) is the full `AssetCode` union: 22 fiat, 7 stablecoin, 15 crypto. Settlement is on-chain, so fiat cannot apply. The `kind` field in the asset table could narrow it.
-3. `PaymentRail.asset` is `AssetCode`, so `IDR` type-checks as an on-chain pay asset.
-4. chain + asset pairs are not constrained: `{ chain: "arbitrum-sepolia", asset: "ETH" }` type-checks, API returns `VALIDATION_ERROR`.
-5. `amount` is optional in the `createIntent` body; nothing distinguishes a `qr` intent from an `amount` intent.
-6. Money is a plain string with no decimal-aware type (VND and JPY have 0 decimals).
-7. `constructWebhook<T = unknown>`: no typed webhook event.
-8. `MayarinApiError.details` is `Record<string, unknown>`; the shape of `issues` is untyped.
+- **verified**: reproduced on next.4 (runtime or `.d.ts`)
+- **not re-tested**: seen on next.3, not re-run on next.4
 
-## Missing API surface
-9. No cancel/void for a payment intent. Probing valid rails leaves intents in `Processing` until TTL.
-10. Rail is fixed at `createIntent`; changing it means a new intent.
-11. Rails are only readable via `paymentLinks.rails(link.id)`. Without a payment link there is no way to list rails.
-12. No way to simulate a deposit on testnet, so `COMPLETED` cannot be tested end to end.
-13. Hosted checkout offers "Local currency (GCash, QRIS, FPX)". No documented or typed headless path for it; `provider` is a free `string`.
-14. `imageUrl` exists on cart lines only, not on `createIntent`.
-15. `createIntent` always returns `checkoutUrl` and `payerToken`. The headless guide says never to send them to the client, but there is no client-safe response type.
+## Fixed in next.4 (thanks)
+| Was | Now |
+|---|---|
+| `AssetCode`, `ChainId`, `Money` not exported | `AssetCode`, `ChainId`, `CHAIN_IDS`, `OnChainAssetCode`, `StablecoinCode`, `MoneyDto` exported |
+| `settlementAsset` was the full `AssetCode` union; `IDR` type-checked as a pay asset | `settlementAsset?: StablecoinCode`, `payment.asset: OnChainAssetCode` |
+| `constructWebhook<T = unknown>` | typed `PaymentWebhookEvent`, `WebhookPaymentState` |
+| `MayarinApiError.details` untyped; `[Object]` in logs | `validationIssues(error)` returns `{ path, message }[]` |
+| No cancel for an intent | `payment.cancelIntent` |
+| Rails needed a payment link | `commerce.rails()` (merchant level) |
+| No way to reach `COMPLETED` on testnet | `payment.simulateDeposit` |
+| No dry run; valid rails found by creating intents | `payment.validateIntent` |
+| `createIntent` returned `checkoutUrl`/`payerToken` with no safe type | `toClientSafe()` / `ClientSafePaymentIntent` |
+| `latest` dist-tag pointed at `next.1` | `latest` = `next` = `0.1.0-next.4` |
 
-## Behavior vs docs
-16. Guide: `CONFIRMED` means show the address. Testnet: status is `PROCESSING` right after `confirmIntent` with `deposit.received = 0.000000`.
-17. `confirmIntent` response had no `deposit` in our probe; `payment.get` returned it.
-18. Guide step 1 uses `paymentLinks.rails(link.id)` without stating a payment link is required.
+## Still open
 
-## Errors
-19. `Request failed validation` is generic. The cause is in `details.issues[].path/message`, shown as `[Object]` in Node logs.
-20. `imageUrl: "http://localhost:4321/..."` fails with `lines.0.imageUrl: Invalid URL`. Nothing says it must be public.
-21. `FORBIDDEN` with `details: {}`; unclear whether merchant id, key scope, or something else.
-22. No dry-run/validate call, so valid chain/asset pairs are found only by creating real intents.
+### Types
+1. chain + asset pairs are not constrained by type. `{ chain: "arbitrum-sepolia", asset: "ETH" }` type-checks; the API refuses it. Only `commerce.rails()` at runtime knows the pairs. **verified** (`CreatePaymentIntentBody` narrows asset only)
+2. `amount` is optional in the `createIntent` body, and nothing distinguishes a `qr` intent from an `amount` intent. **verified**
+3. Money is a plain string with no decimal-aware type (VND and JPY have 0 decimals, IDR has 2). **verified**
+4. `RailDto.asset` and `RailDto.settlementAsset` are still `AssetCode`, while `createIntent` now takes `OnChainAssetCode` / `StablecoinCode`. Reading a rail and passing it to `createIntent` needs a cast. **verified**
 
-## Packaging
-23. `latest` dist-tag is `0.1.0-next.1`; `next.3` is only under `next`. Plain `npm i @mayarin/sdk` gets the oldest.
-24. All releases are `next` prereleases; no changelog found for what changed between next.2 and next.3 (e.g. cart line `imageUrl`).
+### API surface
+5. Rail is fixed at `createIntent`; switching chain/asset means `cancelIntent` + a new intent. **verified**
+6. `provider` is a free `string`. Hosted checkout offers "Local currency (GCash, QRIS, FPX)" but there is no documented or typed headless path for it. **verified**
+7. `imageUrl` exists on cart lines only, not on `createIntent`. **verified**
+8. No icon URLs for chains or assets. `RailDto` has `chain`, `asset`, `contract`, `settlementAsset` only, so integrators with their own payer UI ship logos themselves, while the hosted checkout and dashboard already show them. Suggest `iconUrl`. **verified**
+9. `commerce.rails()` is a flat list; every picker groups it by chain. A grouped response or helper would save the boilerplate. **verified**
 
-## Repro for 2-4 (types) and 20
+### Behavior vs docs
+10. Guide: `CONFIRMED` means show the address. Testnet: status is `PROCESSING` right after `confirmIntent` with `deposit.received = 0.000000`. **verified** (we key the UI off `deposit` instead of status)
+11. `confirmIntent` response had no `deposit` while `payment.get` did. **not re-tested**
+
+### Resilience and errors
+12. No automatic retry. Errors are flagged `retryable: true` (e.g. `NETWORK_ERROR`, "The request never reached the API") but the SDK never retries, so one dropped connection fails a whole checkout. We wrap calls in our own `withRetry`. A `retries` option on `ClientConfig` for idempotent calls would help. **verified** (hit it on a real checkout)
+13. `NETWORK_ERROR` hides the cause: it is only in `error.cause` (`ECONNRESET`, timeout, DNS). Putting the code in `message` would make logs useful. **verified**
+14. No `timeoutMs` in `ClientConfig`; a request can only be bounded with a per-call `AbortSignal`. **verified** (`timeoutMs` exists only on `waitFor`)
+15. `FORBIDDEN` came back with `details: {}`; unclear whether merchant id, key scope or something else. **not re-tested**
+16. `imageUrl: "http://localhost:..."` fails with `lines.0.imageUrl: Invalid URL`, with no hint that it must be public. `validationIssues` now surfaces the path, but not the reason. **not re-tested**
+
+### Packaging
+17. Still a `next` prerelease and no changelog found for next.2 to next.4. **verified**
+
+## Repro for 1 and 4
 ```ts
 import { createMayarin } from "@mayarin/sdk";
 const c = createMayarin({ baseUrl: "https://api-testnet.mayarin.xyz", secretKey });
-// type-checks, API rejects (VALIDATION_ERROR):
-await c.payment.createIntent({ merchant, amount: { amount: "10000.00", asset: "IDR" },
+// type-checks, API refuses (VALIDATION_ERROR): ETH is not offered on arbitrum-sepolia
+await c.payment.validateIntent({ merchant, amount: { amount: "10000.00", asset: "IDR" },
   payment: { chain: "arbitrum-sepolia", asset: "ETH" }, executionPath: "deposit-match" });
-// type-checks, API rejects (lines.0.imageUrl: Invalid URL):
-await c.commerce.carts.checkout({ merchant, currency: "IDR", merchantReference: "x",
-  lines: [{ name: "t", unitPrice: { amount: "1000.00", asset: "IDR" }, quantity: 1,
-    imageUrl: "http://localhost:4321/a.png" }] });
+// rails come back as AssetCode, createIntent wants OnChainAssetCode
+const { rails } = await c.commerce.rails();
+await c.payment.validateIntent({ merchant, amount, payment: { chain: rails[0].chain, asset: rails[0].asset } }); // type error
 ```
-
-## Status on 0.1.0-next.4
-Fixed: 1 (`AssetCode`, `ChainId`, `OnChainAssetCode`, `MoneyDto` exported), 2-3 (`settlementAsset` is `StablecoinCode`, pay asset is `OnChainAssetCode`), 7 (typed `PaymentWebhookEvent`), 8 (`validationIssues`), 9 (`cancelIntent`), 11 (`commerce.rails()`, no payment link needed), 12 (`simulateDeposit`), 19-22 (`ValidationIssue`, `validateIntent` dry run), 23 (`latest` tag now points at the newest release).
-Still open: 4 (chain/asset pair is runtime-only), 5, 6, 10 (rail still fixed at `createIntent`; we cancel + recreate), 13, 14, 15, 16 (`PROCESSING` right after confirm), 17, 21 (`FORBIDDEN` details).
-
-## New on next.4 (found after upgrading)
-25. No automatic retry: errors are flagged `retryable: true` (e.g. `NETWORK_ERROR`, "The request never reached the API") but the SDK never retries, so one dropped connection fails a whole checkout. We wrap `createIntent`/`confirmIntent` in our own `withRetry`. A `retries` option on `ClientConfig` (idempotent calls only) would help.
-26. `NETWORK_ERROR` hides the cause: it is only in `error.cause` (`ECONNRESET`, timeout, DNS). Including the code in `message` would make logs useful.
-27. No icon URLs for chains or assets. `RailDto` has `chain`, `asset`, `contract`, `settlementAsset` only, so integrators with their own payer UI have to ship logos themselves (the hosted checkout and dashboard already show them). Suggest `iconUrl` on rails.
-28. `commerce.rails()` returns a flat list. Grouping by chain (chain, label, assets[]) is what every picker needs; a `groupByChain` helper or a grouped response would save the boilerplate.
-29. No `timeoutMs` in `ClientConfig`; the only way to bound a request is passing an `AbortSignal` per call.
