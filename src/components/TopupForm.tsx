@@ -44,18 +44,7 @@ export default function TopupForm({ game }: { game: Game }) {
     setError(undefined);
     try {
       // Headless checkout: backend creates + confirms the payment, our own UI shows the deposit.
-      // const res = await fetch("/api/headless/checkout", {
-      //   method: "POST",
-      //   headers: { "content-type": "application/json" },
-      //   body: JSON.stringify({ gameSlug: game.slug, productId: product.id, ...values }),
-      // });
-      // const data = await res.json();
-      // if (!res.ok) throw new Error(data.error ?? "Gagal");
-      // window.location.href = `/headless/pay/${data.orderId}`;
-
-      // --- Hosted checkout (new tab / modal), disabled in favor of headless ---
-      // // Open the tab synchronously in the click handler so popup blockers allow it.
-      const res = await fetch("/api/checkout", {
+      const res = await fetch("/api/headless/checkout", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -66,17 +55,31 @@ export default function TopupForm({ game }: { game: Game }) {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error ?? "Gagal");
-      const orderUrl = `/order/${data.orderId}`;
+      window.location.href = `/headless/pay/${data.orderId}`;
 
-      // Modal over this page. onSuccess is UI-only; webhook confirms payment server-side.
-      openCheckout(new URL(data.url, window.location.href).href, {
-        onSuccess: () => (window.location.href = orderUrl),
-        onFailed: () => (window.location.href = orderUrl),
-        onClose: () => {
-          setLoading(false);
-          window.location.href = orderUrl;
-        },
-      });
+      // --- Hosted checkout (new tab / modal), disabled in favor of headless ---
+      // // Open the tab synchronously in the click handler so popup blockers allow it.
+      // const res = await fetch("/api/checkout", {
+      //   method: "POST",
+      //   headers: { "content-type": "application/json" },
+      //   body: JSON.stringify({
+      //     gameSlug: game.slug,
+      //     productId: product.id,
+      //     ...values,
+      //   }),
+      // });
+      // const data = await res.json();
+      // if (!res.ok) throw new Error(data.error ?? "Gagal");
+      // const orderUrl = `/order/${data.orderId}`;
+      // // Modal over this page. onSuccess is UI-only; webhook confirms payment server-side.
+      // openCheckout(new URL(data.url, window.location.href).href, {
+      //   onSuccess: () => (window.location.href = orderUrl),
+      //   onFailed: () => (window.location.href = orderUrl),
+      //   onClose: () => {
+      //     setLoading(false);
+      //     window.location.href = orderUrl;
+      //   },
+      // });
       // // Checkout UI in a new tab; this page goes to the order status page (polls until webhook confirms).
       // if (tab) tab.location.href = data.url;
       // else window.open(data.url, "_blank"); // blocked earlier: best effort

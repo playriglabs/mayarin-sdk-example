@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import QRCode from "qrcode";
 import { rupiah } from "../lib/format";
+import { assetIcon, chainIcon } from "../lib/icons";
 import type { ChainId as Chain, OnChainAssetCode as Asset } from "@mayarin/sdk";
 
 interface Payment {
@@ -170,6 +171,7 @@ export default function HeadlessPay({
                   setAsset(r.assets.length === 1 ? r.assets[0] : undefined);
                 }}
               >
+                <Icon src={chainIcon(r.chain)} name={r.label} />
                 {r.label}
               </Chip>
             ))}
@@ -184,6 +186,7 @@ export default function HeadlessPay({
                     active={asset === a}
                     onClick={() => setAsset(a)}
                   >
+                    <Icon src={assetIcon(a)} name={a} />
                     {a}
                   </Chip>
                 ))}
@@ -211,8 +214,17 @@ export default function HeadlessPay({
             </div>
           </div>
           <div className="text-center text-sm text-white/70">
-            Kirim tepat <b>{d.asset}</b> di jaringan{" "}
-            <b>{d.chainLabel}</b>. Transfer di jaringan lain tidak akan
+            Kirim tepat{" "}
+            <b className="inline-flex items-center gap-1 align-middle">
+              <Icon src={assetIcon(d.asset)} name={d.asset} />
+              {d.asset}
+            </b>{" "}
+            di jaringan{" "}
+            <b className="inline-flex items-center gap-1 align-middle">
+              <Icon src={chainIcon(d.chain)} name={d.chainLabel} />
+              {d.chainLabel}
+            </b>
+            . Transfer di jaringan lain tidak akan
             masuk.
           </div>
           <Row
@@ -353,7 +365,7 @@ const Chip = ({
   <button
     type="button"
     onClick={onClick}
-    className={`px-3 h-10 rounded-xl border text-sm font-semibold transition ${
+    className={`px-3 h-10 rounded-xl border text-sm font-semibold transition inline-flex items-center gap-2 ${
       active
         ? "border-brand bg-brand/15 text-brand"
         : "border-line bg-surface hover:border-brand/60"
@@ -362,3 +374,11 @@ const Chip = ({
     {children}
   </button>
 );
+
+/** Token/network logo, or a letter badge when none is mapped. */
+const Icon = ({ src, name }: { src?: string; name: string }) =>
+  src ? (
+    <img src={src} alt="" width="20" height="20" className="size-5 rounded-full object-contain" />
+  ) : (
+    <span className="size-5 rounded-full bg-white/15 grid place-items-center text-[10px]">{name[0]}</span>
+  );
