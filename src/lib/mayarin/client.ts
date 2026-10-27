@@ -39,7 +39,26 @@ export function publicImageUrl(path: string): string | undefined {
 export function describeError(err: unknown): string {
   if (isMayarinApiError(err)) {
     const issues = validationIssues(err);
-    return issues.length ? issues.map((i) => `${i.path}: ${i.message}`).join("; ") : `${err.code} ${err.message}`;
+    return issues.length ? issues.map((i) => `${i.path}: ${i.message}`).join("; ") : `${err.code} ${err.message}${causeOf(err)}`;
   }
   return err instanceof Error ? err.message : String(err);
+}
+
+/** Network-level cause behind a NETWORK_ERROR (e.g. ECONNRESET, UND_ERR_CONNECT_TIMEOUT), for logs. */
+export const causeOf = (err: unknown): string =>
+  err instanceof Error && err.cause ? ` (${(err.cause as { code?: string }).code ?? String(err.cause)})` : "";
+
+/**
+ * Retry calls the SDK marks `retryable` (dropped connection, 5xx). Safe for our writes because
+ * each carries an idempotency key, so a retry reuses the first request's result.
+ */
+export async function withRetry<T>(fn: () => Promise<T>, attempts = 3): Promise<T> {
+  for (let i = 1; ; i++) {
+    try {
+      return await fn();
+    } catch (err) {
+      if (!(isMayarinApiError(err) && err.retryable) || i >= attempts) throw err;
+      await new Promise((r) => setTimeout(r, 400 * i));
+    }
+  }
 }
