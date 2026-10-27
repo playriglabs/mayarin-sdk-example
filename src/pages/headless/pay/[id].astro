@@ -1,0 +1,10 @@
+---
+import Base from "../../../layouts/Base.astro";
+import HeadlessPay from "../../../components/HeadlessPay";
+import { getOrder } from "../../../lib/orders";
+const order = await getOrder(Astro.params.id!);
+if (!order) return Astro.redirect("/cek-transaksi?notfound=1");
+---
+<Base title={`Bayar ${order.id} – GamingFun`}>
+  <HeadlessPay client:load orderId={order.id} retryHref={`/headless/${order.gameSlug}`} />
+</Base>

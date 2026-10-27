@@ -3,6 +3,8 @@ export interface GameField {
   label: string;
   placeholder: string;
   type: "text" | "select";
+  /** Input rule for text fields. Default "numeric" (game IDs); "username" for names like Roblox. */
+  format?: "numeric" | "username";
   options?: string[];
 }
 
@@ -19,6 +21,7 @@ export interface Game {
   publisher: string;
   currencyName: string;
   image: string;
+  checkoutImage: string; // public absolute URL for Mayarin checkout
   banner: string;
   icon: string;
   description: string;
@@ -34,7 +37,7 @@ export interface Order {
   gameName: string;
   productId: string;
   productName: string;
-  productImage: string;
+  gameImage: string;
   price: number;
   account: { userId: string; zoneId?: string };
   status: OrderStatus;
@@ -44,3 +47,6 @@ export interface Order {
   createdAt: string;
   updatedAt: string;
 }
+
+export type Chain = "ethereum-sepolia" | "base-sepolia" | "arbitrum-sepolia" | "polygon-amoy" | "bsc-testnet" | "arc-testnet";
+export type Asset = "USDC" | "ETH";

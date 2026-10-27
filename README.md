@@ -1,6 +1,6 @@
 # GamingFun – Mayarin SDK example
 
-Demo storefront for game top ups (Mobile Legends, Genshin Impact, Free Fire) paid with crypto via [Mayarin](https://docs.mayarin.xyz/).
+Demo storefront for game top ups (Mobile Legends, Genshin Impact, Free Fire, Roblox, Ragnarok M, Call of Duty Mobile) paid with crypto via [Mayarin](https://docs.mayarin.xyz/).
 
 Stack: Astro 5 (SSR), React, TypeScript, Tailwind v4, `@mayarin/sdk`. No database: catalog is `src/data/games.json`, orders are written to `data/orders.json`.
 

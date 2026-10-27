@@ -3,11 +3,16 @@ import { writeFileSync } from "node:fs";
 
 const ml = [[5,1713],[10,3421],[11,3988],[12,3988],[14,5129],[15,5129],[19,6263],[20,6836],[22,7403],[28,9110],[30,10245],[36,11953],[42,13676],[44,13676],[45,14806],[46,15373],[54,17091],[56,17658],[59,18229],[60,19366],[64,19936],[65,21074],[67,21641],[70,22211],[74,23352],[75,23916],[78,24552],[80,25623],[85,26203],[86,27333],[88,27341],[89,27911],[92,29041],[98,30772],[100,31339],[110,34755],[112,35322],[116,36461],[128,39878],[140,43860],[148,46142],[170,52408],[172,53542],[176,54680],[222,68912],[223,69488]];
 const ff = [[5,799],[40,5853],[50,6215],[55,6990],[60,7766],[70,8458],[75,9234],[80,10010],[90,11567],[95,12342],[100,12429],[120,14673],[125,15449],[130,16224],[140,16917],[145,17692],[150,18468],[160,20020],[170,20882],[180,22434],[190,23126],[200,24677],[210,25370],[230,28489],[250,30903],[260,31595],[280,33839],[300,36942],[350,42291],[360,43066],[375,45394],[400,48501],[420,50744],[455,54709],[475,56953],[495,59197],[500,59972],[512,61663],[520,63075],[545,65406],[565,67650],[600,72391],[635,76103],[645,77654],[655,79206]];
+const rbx = [[800,162933],[1700,300963],[2000,363793],[4500,815077],[10000,1806465]]; // 100 Robux: out of service at source
+const rom = [[18,46733],[24,63220],[30,77875],[72,152991],[145,301359]];
+const cod = [[63,8507],[128,17013],[321,42533],[645,85065],[800,102078],[1373,170130],[2060,255195],[2750,323247],[3564,425325]];
+const num = (n) => n.toLocaleString("id-ID");
 const gi = [["60 Genesis Crystals",17356],["300+30 Genesis Crystals",85175],["980+110 Genesis Crystals",268084],["1980+260 Genesis Crystals",514067]];
 
 const games = [
   {
     slug: "mobile-legends", name: "Mobile Legends", publisher: "Moonton", currencyName: "Diamond",
+    checkoutImage: "https://topupgames.id/img/games/6ad17708df4356.30392748.webp", // live public URL, shown in Mayarin checkout (needs https, not localhost)
     image: "/games/ml-logo.webp", banner: "/games/ml-banner.webp", icon: "/icons/diamond-ml.svg",
     description: "Top up Diamond Mobile Legends: Bang Bang. Masukkan ID dan Server, bayar crypto, diamond masuk otomatis.",
     fields: [
@@ -18,6 +23,7 @@ const games = [
   },
   {
     slug: "genshin-impact", name: "Genshin Impact", publisher: "HoYoverse", currencyName: "Genesis Crystals",
+    checkoutImage: "https://topupgames.id/img/games/6ad2193ddc9a00.64298596.webp", // live public URL, shown in Mayarin checkout (needs https, not localhost)
     image: "/games/gi-logo.webp", banner: "/games/gi-banner.webp", icon: "/icons/crystal-gi.svg",
     description: "Top up Genesis Crystals Genshin Impact. Masukkan UID dan pilih server.",
     fields: [
@@ -28,10 +34,38 @@ const games = [
   },
   {
     slug: "free-fire", name: "Free Fire", publisher: "Garena", currencyName: "Diamond",
+    checkoutImage: "https://topupgames.id/img/games/6ad175f51a4d43.50796087.webp", // live public URL, shown in Mayarin checkout (needs https, not localhost)
     image: "/games/ff-logo.webp", banner: "/games/ff-banner.webp", icon: "/icons/diamond-ff.svg",
     description: "Top up Diamond Free Fire. Cukup masukkan ID pemain.",
     fields: [{ key: "userId", label: "ID", placeholder: "Masukkan ID", type: "text" }],
     products: ff.map(([n, p]) => ({ id: `ff-${n}`, name: `Free Fire ${n} Diamond`, price: p, image: "/icons/diamond-ff.svg" })),
+  },
+  {
+    slug: "roblox", name: "Roblox", publisher: "Roblox Corporation", currencyName: "Robux",
+    checkoutImage: "https://dfjjn12bu2e03.cloudfront.net/public/operators/roblox.png", // live public URL, shown in Mayarin checkout (needs https, not localhost)
+    image: "/games/roblox-logo.png", banner: "/games/roblox-banner.jpg", icon: "/icons/robux.svg",
+    description: "Top up Robux Roblox. Masukkan username Roblox, bayar crypto.",
+    fields: [{ key: "userId", label: "Username", placeholder: "Masukkan Username Roblox", type: "text", format: "username" }],
+    products: rbx.map(([n, p]) => ({ id: `rbx-${n}`, name: `Voucher ${num(n)} Robux`, price: p, image: "/icons/robux.svg" })),
+  },
+  {
+    slug: "ragnarok-m-eternal-love", name: "Ragnarok M: Eternal Love", publisher: "Gravity", currencyName: "Big Cat Coins",
+    checkoutImage: "https://topupgames.id/img/games/6ad17a27d07140.15024701.webp", // live public URL, shown in Mayarin checkout (needs https, not localhost)
+    image: "/games/rom-logo.webp", banner: "/games/rom-banner.webp", icon: "/icons/coin-rom.svg",
+    description: "Top up Big Cat Coins Ragnarok M: Eternal Love. Masukkan ID dan pilih server.",
+    fields: [
+      { key: "userId", label: "ID", placeholder: "Masukkan ID", type: "text" },
+      { key: "zoneId", label: "Server", placeholder: "Pilih Server", type: "select", options: ["Eternal Love", "Midnight Party", "Memory of Faith", "Valhalla Glory", "Port City"] },
+    ],
+    products: rom.map(([n, p]) => ({ id: `rom-${n}`, name: `${n} Big Cat Coins`, price: p, image: "/icons/coin-rom.svg" })),
+  },
+  {
+    slug: "call-of-duty-mobile", name: "Call of Duty Mobile", publisher: "Activision", currencyName: "CP",
+    checkoutImage: "https://topupgames.id/img/games/6ad217e13cc033.52251671.webp", // live public URL, shown in Mayarin checkout (needs https, not localhost)
+    image: "/games/cod-logo.webp", banner: "/games/cod-banner.webp", icon: "/icons/cp-cod.svg",
+    description: "Top up CP Call of Duty: Mobile. Masukkan Open ID (bukan UID).",
+    fields: [{ key: "userId", label: "Open ID", placeholder: "Open ID, bukan UID", type: "text" }],
+    products: cod.map(([n, p]) => ({ id: `cod-${n}`, name: `Call of Duty Mobile ${n} CP`, price: p, image: "/icons/cp-cod.svg" })),
   },
 ];
 writeFileSync("src/data/games.json", JSON.stringify(games, null, 2) + "\n");

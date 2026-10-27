@@ -4,6 +4,7 @@
     "name": "Mobile Legends",
     "publisher": "Moonton",
     "currencyName": "Diamond",
+    "checkoutImage": "https://topupgames.id/img/games/6ad17708df4356.30392748.webp",
     "image": "/games/ml-logo.webp",
     "banner": "/games/ml-banner.webp",
     "icon": "/icons/diamond-ml.svg",
@@ -306,6 +307,7 @@
     "name": "Genshin Impact",
     "publisher": "HoYoverse",
     "currencyName": "Genesis Crystals",
+    "checkoutImage": "https://topupgames.id/img/games/6ad2193ddc9a00.64298596.webp",
     "image": "/games/gi-logo.webp",
     "banner": "/games/gi-banner.webp",
     "icon": "/icons/crystal-gi.svg",
@@ -362,6 +364,7 @@
     "name": "Free Fire",
     "publisher": "Garena",
     "currencyName": "Diamond",
+    "checkoutImage": "https://topupgames.id/img/games/6ad175f51a4d43.50796087.webp",
     "image": "/games/ff-logo.webp",
     "banner": "/games/ff-banner.webp",
     "icon": "/icons/diamond-ff.svg",
@@ -644,6 +647,197 @@
         "name": "Free Fire 655 Diamond",
         "price": 79206,
         "image": "/icons/diamond-ff.svg"
+      }
+    ]
+  },
+  {
+    "slug": "roblox",
+    "name": "Roblox",
+    "publisher": "Roblox Corporation",
+    "currencyName": "Robux",
+    "checkoutImage": "https://dfjjn12bu2e03.cloudfront.net/public/operators/roblox.png",
+    "image": "/games/roblox-logo.png",
+    "banner": "/games/roblox-banner.jpg",
+    "icon": "/icons/robux.svg",
+    "description": "Top up Robux Roblox. Masukkan username Roblox, bayar crypto.",
+    "fields": [
+      {
+        "key": "userId",
+        "label": "Username",
+        "placeholder": "Masukkan Username Roblox",
+        "type": "text",
+        "format": "username"
+      }
+    ],
+    "products": [
+      {
+        "id": "rbx-800",
+        "name": "Voucher 800 Robux",
+        "price": 162933,
+        "image": "/icons/robux.svg"
+      },
+      {
+        "id": "rbx-1700",
+        "name": "Voucher 1.700 Robux",
+        "price": 300963,
+        "image": "/icons/robux.svg"
+      },
+      {
+        "id": "rbx-2000",
+        "name": "Voucher 2.000 Robux",
+        "price": 363793,
+        "image": "/icons/robux.svg"
+      },
+      {
+        "id": "rbx-4500",
+        "name": "Voucher 4.500 Robux",
+        "price": 815077,
+        "image": "/icons/robux.svg"
+      },
+      {
+        "id": "rbx-10000",
+        "name": "Voucher 10.000 Robux",
+        "price": 1806465,
+        "image": "/icons/robux.svg"
+      }
+    ]
+  },
+  {
+    "slug": "ragnarok-m-eternal-love",
+    "name": "Ragnarok M: Eternal Love",
+    "publisher": "Gravity",
+    "currencyName": "Big Cat Coins",
+    "checkoutImage": "https://topupgames.id/img/games/6ad17a27d07140.15024701.webp",
+    "image": "/games/rom-logo.webp",
+    "banner": "/games/rom-banner.webp",
+    "icon": "/icons/coin-rom.svg",
+    "description": "Top up Big Cat Coins Ragnarok M: Eternal Love. Masukkan ID dan pilih server.",
+    "fields": [
+      {
+        "key": "userId",
+        "label": "ID",
+        "placeholder": "Masukkan ID",
+        "type": "text"
+      },
+      {
+        "key": "zoneId",
+        "label": "Server",
+        "placeholder": "Pilih Server",
+        "type": "select",
+        "options": [
+          "Eternal Love",
+          "Midnight Party",
+          "Memory of Faith",
+          "Valhalla Glory",
+          "Port City"
+        ]
+      }
+    ],
+    "products": [
+      {
+        "id": "rom-18",
+        "name": "18 Big Cat Coins",
+        "price": 46733,
+        "image": "/icons/coin-rom.svg"
+      },
+      {
+        "id": "rom-24",
+        "name": "24 Big Cat Coins",
+        "price": 63220,
+        "image": "/icons/coin-rom.svg"
+      },
+      {
+        "id": "rom-30",
+        "name": "30 Big Cat Coins",
+        "price": 77875,
+        "image": "/icons/coin-rom.svg"
+      },
+      {
+        "id": "rom-72",
+        "name": "72 Big Cat Coins",
+        "price": 152991,
+        "image": "/icons/coin-rom.svg"
+      },
+      {
+        "id": "rom-145",
+        "name": "145 Big Cat Coins",
+        "price": 301359,
+        "image": "/icons/coin-rom.svg"
+      }
+    ]
+  },
+  {
+    "slug": "call-of-duty-mobile",
+    "name": "Call of Duty Mobile",
+    "publisher": "Activision",
+    "currencyName": "CP",
+    "checkoutImage": "https://topupgames.id/img/games/6ad217e13cc033.52251671.webp",
+    "image": "/games/cod-logo.webp",
+    "banner": "/games/cod-banner.webp",
+    "icon": "/icons/cp-cod.svg",
+    "description": "Top up CP Call of Duty: Mobile. Masukkan Open ID (bukan UID).",
+    "fields": [
+      {
+        "key": "userId",
+        "label": "Open ID",
+        "placeholder": "Open ID, bukan UID",
+        "type": "text"
+      }
+    ],
+    "products": [
+      {
+        "id": "cod-63",
+        "name": "Call of Duty Mobile 63 CP",
+        "price": 8507,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-128",
+        "name": "Call of Duty Mobile 128 CP",
+        "price": 17013,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-321",
+        "name": "Call of Duty Mobile 321 CP",
+        "price": 42533,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-645",
+        "name": "Call of Duty Mobile 645 CP",
+        "price": 85065,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-800",
+        "name": "Call of Duty Mobile 800 CP",
+        "price": 102078,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-1373",
+        "name": "Call of Duty Mobile 1373 CP",
+        "price": 170130,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-2060",
+        "name": "Call of Duty Mobile 2060 CP",
+        "price": 255195,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-2750",
+        "name": "Call of Duty Mobile 2750 CP",
+        "price": 323247,
+        "image": "/icons/cp-cod.svg"
+      },
+      {
+        "id": "cod-3564",
+        "name": "Call of Duty Mobile 3564 CP",
+        "price": 425325,
+        "image": "/icons/cp-cod.svg"
       }
     ]
   }
