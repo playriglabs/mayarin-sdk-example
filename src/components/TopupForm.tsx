@@ -49,7 +49,7 @@ export default function TopupForm({ game }: { game: Game }) {
   const [productId, setProductId] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
-  const [mode, setMode] = useState<CheckoutMode>("headless");
+  const [mode, setMode] = useState<CheckoutMode>("modal");
 
   const product = game.products.find((p) => p.id === productId);
   const filled = game.fields.every((f) => values[f.key]?.trim());
