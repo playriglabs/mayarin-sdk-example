@@ -13,21 +13,31 @@ import {
 } from "../../../lib/mayarin";
 
 const json = (body: unknown, status = 200) =>
-  new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
+  new Response(JSON.stringify(body), {
+    status,
+    headers: { "content-type": "application/json" },
+  });
 
 /** Payment state for the payer's screen: rail picker until a rail is chosen, then the deposit. */
 export const GET: APIRoute = async ({ params }) => {
   const order = await getOrder(params.id!);
   if (!order) return json({ error: "not found" }, 404);
-  const summary = { orderId: order.id, productName: order.productName, gameName: order.gameName, price: order.price };
+  const summary = {
+    orderId: order.id,
+    productName: order.productName,
+    gameName: order.gameName,
+    price: order.price,
+  };
   try {
-    if (!order.intentId) return json({ ...summary, status: "SELECT", rails: await getRails() });
+    if (!order.intentId)
+      return json({ ...summary, status: "SELECT", rails: await getRails() });
     const payment = await getHeadlessPayment(order.intentId, order.id);
     if (!payment) return json({ error: "not found" }, 404);
     // Webhook is the primary path; this keeps local dev (no webhook delivery) in sync.
     if (order.status === "PENDING") {
       const result = await fetchIntentStatus(order.intentId, order.id);
-      if (result?.status) await updateOrder(order.id, { status: result.status });
+      if (result?.status)
+        await updateOrder(order.id, { status: result.status });
     }
     return json({ ...summary, ...payment });
   } catch (err) {
@@ -42,14 +52,21 @@ export const POST: APIRoute = async ({ params, request }) => {
   if (!order) return json({ error: "not found" }, 404);
   if (order.intentId) return json({ ok: true }); // already created (double tap)
   const body = await request.json().catch(() => null);
+  const attempt = (order.attempts ?? 0) + 1;
   try {
-    if (!(await isOfferedRail(body?.chain, body?.asset))) return json({ error: "Chain atau asset tidak tersedia" }, 400);
-    const attempt = (order.attempts ?? 0) + 1;
-    const intentId = await createHeadlessPayment(order, { chain: body.chain, asset: body.asset }, attempt);
+    if (!(await isOfferedRail(body?.chain, body?.asset)))
+      return json({ error: "Chain atau asset tidak tersedia" }, 400);
+    const intentId = await createHeadlessPayment(
+      order,
+      { chain: body.chain, asset: body.asset },
+      attempt,
+    );
     await updateOrder(order.id, { intentId, attempts: attempt });
     return json({ ok: true });
   } catch (err) {
     console.error("headless payment failed", describeError(err));
+    // The failed attempt may have left a FAILED intent behind; a retry on the same key would return it, so move on.
+    await updateOrder(order.id, { attempts: attempt });
     return json({ error: "Gagal membuat pembayaran, coba lagi" }, 502);
   }
 };
@@ -63,7 +80,11 @@ export const DELETE: APIRoute = async ({ params }) => {
     await updateOrder(order.id, { intentId: undefined });
     return json({ ok: true });
   } catch (err) {
-    if (isMayarinApiError(err) && err.status === 409) return json({ error: "Pembayaran sudah berjalan, tidak bisa diganti" }, 409);
+    if (isMayarinApiError(err) && err.status === 409)
+      return json(
+        { error: "Pembayaran sudah berjalan, tidak bisa diganti" },
+        409,
+      );
     console.error("headless cancel failed", describeError(err));
     return json({ error: "Gagal mengganti jaringan" }, 502);
   }

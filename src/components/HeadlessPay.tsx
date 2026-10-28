@@ -18,7 +18,6 @@ interface Payment {
     | "FAILED"
     | "EXPIRED";
   expiresAt: string;
-  failureReason: string | null;
   canSimulate?: boolean;
   rails?: { chain: Chain; label: string; assets: Asset[] }[];
   deposit: {
@@ -224,8 +223,7 @@ export default function HeadlessPay({
               <Icon src={chainIcon(d.chain)} name={d.chainLabel} />
               {d.chainLabel}
             </b>
-            . Transfer di jaringan lain tidak akan
-            masuk.
+            . Transfer di jaringan lain tidak akan masuk.
           </div>
           <Row
             label="Jumlah"
@@ -245,13 +243,21 @@ export default function HeadlessPay({
           </div>
           {Number(d.received) === 0 && (
             <div className="flex justify-center gap-4 text-xs">
-              <button type="button" disabled={paying} onClick={() => act("DELETE")}
-                className="text-brand font-semibold disabled:opacity-40">
+              <button
+                type="button"
+                disabled={paying}
+                onClick={() => act("DELETE")}
+                className="text-brand font-semibold disabled:opacity-40"
+              >
                 Ganti jaringan / aset
               </button>
               {p.canSimulate && (
-                <button type="button" disabled={paying} onClick={() => act("PUT")}
-                  className="text-white/60 font-semibold disabled:opacity-40">
+                <button
+                  type="button"
+                  disabled={paying}
+                  onClick={() => act("PUT")}
+                  className="text-white/60 font-semibold disabled:opacity-40"
+                >
                   Simulasi bayar (testnet)
                 </button>
               )}
@@ -277,7 +283,7 @@ export default function HeadlessPay({
       )}
       {p.status === "FAILED" && (
         <Banner tone="text-red-400">
-          Pembayaran gagal{p.failureReason ? `: ${p.failureReason}` : ""}.
+          Pembayaran gagal. Silakan buat pembayaran baru.
         </Banner>
       )}
       {p.status === "EXPIRED" && (
@@ -378,7 +384,15 @@ const Chip = ({
 /** Token/network logo, or a letter badge when none is mapped. */
 const Icon = ({ src, name }: { src?: string; name: string }) =>
   src ? (
-    <img src={src} alt="" width="20" height="20" className="size-5 rounded-full object-contain" />
+    <img
+      src={src}
+      alt=""
+      width="20"
+      height="20"
+      className="size-5 rounded-full object-contain"
+    />
   ) : (
-    <span className="size-5 rounded-full bg-white/15 grid place-items-center text-[10px]">{name[0]}</span>
+    <span className="size-5 rounded-full bg-white/15 grid place-items-center text-[10px]">
+      {name[0]}
+    </span>
   );

@@ -58,10 +58,12 @@ export async function getHeadlessPayment(
     paymentIntent.merchantReference !== expectedOrderId
   )
     return undefined;
+  // Raw failure reasons can carry provider internals (ARNs, account ids): log them, never send them to the payer.
+  if (paymentIntent.status === "FAILED")
+    console.warn("payment failed", intentId, paymentIntent.failureReason);
   return {
     status: paymentIntent.status,
     expiresAt: paymentIntent.expiresAt,
-    failureReason: paymentIntent.failureReason,
     canSimulate: isTestnet,
     deposit: deposit && {
       address: deposit.address,

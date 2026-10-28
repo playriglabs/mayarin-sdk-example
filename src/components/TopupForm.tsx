@@ -28,11 +28,28 @@ function Step({
   );
 }
 
+type CheckoutMode = "headless" | "modal" | "tab";
+
+const MODES: { id: CheckoutMode; title: string; desc: string }[] = [
+  {
+    id: "headless",
+    title: "Headless",
+    desc: "UI bayar sendiri: pilih jaringan, QR, alamat deposit",
+  },
+  {
+    id: "modal",
+    title: "Modal",
+    desc: "Checkout Mayarin dalam iframe di atas halaman ini",
+  },
+  { id: "tab", title: "Tab Mayarin Pay", desc: "Checkout Mayarin di tab baru" },
+];
+
 export default function TopupForm({ game }: { game: Game }) {
   const [values, setValues] = useState<Record<string, string>>({});
   const [productId, setProductId] = useState<string>();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>();
+  const [mode, setMode] = useState<CheckoutMode>("headless");
 
   const product = game.products.find((p) => p.id === productId);
   const filled = game.fields.every((f) => values[f.key]?.trim());
@@ -42,49 +59,58 @@ export default function TopupForm({ game }: { game: Game }) {
       return setError("Lengkapi data akun dan pilih nominal");
     setLoading(true);
     setError(undefined);
+    // Tab mode: open the tab synchronously in the click handler so popup blockers allow it.
+    const tab: Window | null =
+      mode === "tab" ? window.open("about:blank", "_blank") : null;
     try {
-      // Headless checkout: backend creates + confirms the payment, our own UI shows the deposit.
-      const res = await fetch("/api/headless/checkout", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          gameSlug: game.slug,
-          productId: product.id,
-          ...values,
-        }),
+      const body = JSON.stringify({
+        gameSlug: game.slug,
+        productId: product.id,
+        ...values,
       });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.error ?? "Gagal");
-      window.location.href = `/headless/pay/${data.orderId}`;
+      const post = async (url: string) => {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body,
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error ?? "Gagal");
+        return data;
+      };
 
-      // --- Hosted checkout (new tab / modal), disabled in favor of headless ---
-      // // Open the tab synchronously in the click handler so popup blockers allow it.
-      // const res = await fetch("/api/checkout", {
-      //   method: "POST",
-      //   headers: { "content-type": "application/json" },
-      //   body: JSON.stringify({
-      //     gameSlug: game.slug,
-      //     productId: product.id,
-      //     ...values,
-      //   }),
-      // });
-      // const data = await res.json();
-      // if (!res.ok) throw new Error(data.error ?? "Gagal");
-      // const orderUrl = `/order/${data.orderId}`;
-      // // Modal over this page. onSuccess is UI-only; webhook confirms payment server-side.
-      // openCheckout(new URL(data.url, window.location.href).href, {
-      //   onSuccess: () => (window.location.href = orderUrl),
-      //   onFailed: () => (window.location.href = orderUrl),
-      //   onClose: () => {
-      //     setLoading(false);
-      //     window.location.href = orderUrl;
-      //   },
-      // });
-      // // Checkout UI in a new tab; this page goes to the order status page (polls until webhook confirms).
-      // if (tab) tab.location.href = data.url;
-      // else window.open(data.url, "_blank"); // blocked earlier: best effort
-      // window.location.href = orderUrl;
+      if (mode === "headless") {
+        // Backend creates + confirms the payment later; our own UI picks the rail and shows the deposit.
+        const data = await post("/api/headless/checkout");
+        window.location.href = `/headless/pay/${data.orderId}`;
+        return;
+      }
+
+      // Hosted checkout (modal or tab). Webhook confirms payment server-side; the UI callbacks are UI-only.
+      const data = await post("/api/checkout");
+      const orderUrl = `/order/${data.orderId}`;
+      if (data.mock) {
+        tab?.close();
+        window.location.href = data.url; // simulated payment page, no embed protocol
+        return;
+      }
+      if (mode === "modal") {
+        openCheckout(new URL(data.url, window.location.href).href, {
+          onSuccess: () => (window.location.href = orderUrl),
+          onFailed: () => (window.location.href = orderUrl),
+          onClose: () => {
+            setLoading(false);
+            window.location.href = orderUrl;
+          },
+        });
+        return;
+      }
+      // Tab: this page goes to the order status page, which polls until the webhook confirms.
+      if (tab) tab.location.href = data.url;
+      else window.open(data.url, "_blank"); // blocked earlier: best effort
+      window.location.href = orderUrl;
     } catch (e) {
+      tab?.close();
       setError(e instanceof Error ? e.message : "Gagal");
       setLoading(false);
     }
@@ -179,6 +205,26 @@ export default function TopupForm({ game }: { game: Game }) {
                     </div>
                   </div>
                 </div>
+              </button>
+            ))}
+          </div>
+        </Step>
+
+        <Step n={3} title="Metode Checkout">
+          <div className="grid gap-3 sm:grid-cols-3">
+            {MODES.map((m) => (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => setMode(m.id)}
+                className={`text-left rounded-xl border p-3 transition ${
+                  m.id === mode
+                    ? "border-brand bg-brand/15"
+                    : "border-line bg-surface hover:border-brand/60"
+                }`}
+              >
+                <div className="text-sm font-semibold">{m.title}</div>
+                <div className="mt-1 text-xs text-white/60">{m.desc}</div>
               </button>
             ))}
           </div>
